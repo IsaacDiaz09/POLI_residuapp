@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class FirebaseAuthService {
         return firebaseClient.verifyIdToken(idToken);
     }
 
-    public FirebaseLoginResponse doLogin(LoginForm loginForm) {
+    public FirebaseLoginResponse doLogin(LoginForm loginForm) throws IOException, InterruptedException {
         return firebaseClient.doLogin(loginForm);
     }
 

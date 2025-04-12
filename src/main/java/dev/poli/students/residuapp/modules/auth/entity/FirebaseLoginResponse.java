@@ -1,35 +1,37 @@
 package dev.poli.students.residuapp.modules.auth.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class FirebaseLoginResponse {
-    @JsonProperty("kind")
+    @SerializedName("kind")
     private String kind;
 
-    @JsonProperty("localId")
+    @SerializedName("localId")
     private String localId;
 
-    @JsonProperty("email")
+    @SerializedName("email")
     private String email;
 
-    @JsonProperty("displayName")
+    @SerializedName("displayName")
     private String displayName;
 
-    @JsonProperty("idToken")
+    @SerializedName("idToken")
     private String idToken;
 
-    @JsonProperty("registered")
+    @SerializedName("registered")
     private boolean registered;
 
-    @JsonProperty("refreshToken")
+    @SerializedName("refreshToken")
     private String refreshToken;
 
-    @JsonProperty("expiresIn")
+    @SerializedName("expiresIn")
     private int expiresInSeconds;
 }
