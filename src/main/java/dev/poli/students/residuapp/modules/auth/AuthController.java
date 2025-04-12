@@ -45,7 +45,7 @@ public class AuthController {
             response.addHeader("Set-Cookie", resCookie.toString());
             response.sendRedirect("/poliresiduapp/home");
         } catch (InterruptedException | IOException e) {
-            response.sendRedirect("/poliresiduapp/login?error=" + e.getMessage());
+            response.sendRedirect("/poliresiduapp/auth/login?error=" + e.getMessage());
         }
     }
 }
