@@ -32,8 +32,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void handleLogin(@Valid LoginForm loginForm, ModelAndView modelAndView,
-                            HttpServletResponse response) {
+    public void handleLogin(@Valid LoginForm loginForm, HttpServletResponse response) throws IOException {
         try {
             FirebaseLoginResponse loginData = authService.doLogin(loginForm);
             ResponseCookie resCookie = ResponseCookie.from("AUTH", loginData.getIdToken())
@@ -46,7 +45,7 @@ public class AuthController {
             response.addHeader("Set-Cookie", resCookie.toString());
             response.sendRedirect("/poliresiduapp/home");
         } catch (InterruptedException | IOException e) {
-            throw new RuntimeException(e);
+            response.sendRedirect("/poliresiduapp/login?error=" + e.getMessage());
         }
     }
 }
