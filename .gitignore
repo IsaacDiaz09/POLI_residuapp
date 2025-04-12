@@ -36,4 +36,10 @@ out/
 ### VS Code ###
 .vscode/
 
+## Application logs
 *.log
+logs/
+
+## Firebase development credentials
+src/main/resources/firebase/credentials.json
+src/main/resources/firebase/web-api-key.txt

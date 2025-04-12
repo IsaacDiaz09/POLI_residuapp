@@ -1,8 +1,7 @@
 package dev.poli.students.residuapp.modules.user.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -10,6 +9,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @Table
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class User {
 
@@ -26,11 +28,13 @@ public class User {
     }
 
     @Id
-    private Long id;
+    @Builder.Default
+    private Long id = System.nanoTime();
 
     private String name;
 
-    private Instant createdAt;
+    @Builder.Default
+    private Instant createdAt = Instant.now();
 
     private Instant modifiedAt;
 

@@ -5,7 +5,41 @@
     <title>Residuapp | Login</title>
 </head>
 <body>
-<h2 th:text="|Hello user ${username}|"></h2>
-<h3 th:text="|Page loaded at ${#temporals.createNow()}|"></h3>
+<div class="container text-center">
+    <h2>Iniciar Sesion</h2>
+    <div>
+        <form id="formLogin" class='border border-2' th:action="@{/auth/login}" method="post"
+              style="max-width: 600px; margin: 0 auto;">
+            <div class="m-3">
+
+                <div th:if="${param.error}" class="alert alert-danger" role="alert" th:text="${param.error}">
+                </div>
+
+                <div class="form-group row">
+                    <label for="username" class="col-form-label col-4">E-mail</label>
+                    <div class="col-6">
+                        <input type="email" id="username" name="username"
+                               class="form-control" placeholder="Escriba su email"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="password" class="col-form-label col-4">Contraseña</label>
+                    <div class="col-6">
+                        <input type="password" id="password" name="password"
+                               class="form-control" placeholder="Escriba su contraseña"/>
+                    </div>
+                </div>
+
+                <button type="submit" id="login" class="btn btn-primary">Ingresar
+                </button>
+
+                <div th:if="${param.logout}" class="alert alert-success"
+                     role="alert">Has cerrado sesion exitosamente
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

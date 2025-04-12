@@ -8,7 +8,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
-public class ThymeleafConfig {
+class ThymeleafConfig {
 
     @Bean
     ISpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
