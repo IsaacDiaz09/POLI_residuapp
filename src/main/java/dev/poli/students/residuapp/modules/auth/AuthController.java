@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,12 @@ public class AuthController {
     private final FirebaseAuthService authService;
 
     @GetMapping("login")
-    public ModelAndView showLoginView(@RequestParam(value = "error", required = false) String error, ModelAndView modelAndView) {
+    public ModelAndView showLoginView(@RequestParam(value = "error", required = false) String error,
+                                      ModelAndView modelAndView, HttpServletResponse response) throws IOException {
+        if ((SecurityContextHolder.getContext().getAuthentication().isAuthenticated())) {
+            response.sendRedirect("/poliresiduapp/home");
+            return null;
+        }
         modelAndView.setViewName("login");
         modelAndView.addObject("error", error);
         return modelAndView;
@@ -38,7 +44,6 @@ public class AuthController {
             ResponseCookie resCookie = ResponseCookie.from("AUTH", loginData.getIdToken())
                     .httpOnly(true)
                     .sameSite("None")
-                    .secure(true)
                     .path("/")
                     .maxAge(loginData.getExpiresInSeconds())
                     .build();
