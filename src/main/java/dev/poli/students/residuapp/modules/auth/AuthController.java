@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,8 @@ public class AuthController {
     @GetMapping("login")
     public ModelAndView showLoginView(@RequestParam(value = "error", required = false) String error,
                                       ModelAndView modelAndView, HttpServletResponse response) throws IOException {
-        if ((SecurityContextHolder.getContext().getAuthentication().isAuthenticated())) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
             response.sendRedirect("/poliresiduapp/home");
             return null;
         }
