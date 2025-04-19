@@ -23,6 +23,8 @@ public class Company {
 
     private String identification;
 
+    private String name;
+
     private Instant createdAt;
 
     @Enumerated(EnumType.STRING)
