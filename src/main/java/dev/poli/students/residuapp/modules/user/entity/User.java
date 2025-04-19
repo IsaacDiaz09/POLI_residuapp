@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -42,5 +41,5 @@ public class User {
     private Status status;
 
     // this field may be null if user does not belong to a company
-    private UUID companyId;
+    private String companyId;
 }

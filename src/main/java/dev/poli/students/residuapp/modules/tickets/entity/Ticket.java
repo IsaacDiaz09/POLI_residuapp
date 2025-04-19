@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -26,7 +25,7 @@ public class Ticket {
     }
 
     @Id
-    private UUID id;
+    private String id;
 
     private String requestedLocation;
 
@@ -37,9 +36,9 @@ public class Ticket {
 
     private Instant updatedAt;
 
-    private UUID requestorUserId;
+    private String requestorUserId;
 
-    private UUID collectionCompanyId;
+    private String collectionCompanyId;
 
     @Enumerated(EnumType.STRING)
     private Status status;

@@ -16,13 +16,13 @@ import java.util.UUID;
 public class TicketReport {
 
     @Id
-    private UUID id;
+    private String id;
 
     private String name;
 
-    private UUID requestorCompanyId;
+    private String requestorCompanyId;
 
-    private UUID requestorUserId;
+    private String requestorUserId;
 
     private Instant createdAt;
 
