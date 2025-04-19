@@ -1,9 +1,6 @@
 package dev.poli.students.residuapp;
 
-import dev.poli.students.residuapp.modules.tickets.TicketService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
@@ -17,10 +14,8 @@ import java.util.TimeZone;
         RestTemplateAutoConfiguration.class,
         UserDetailsServiceAutoConfiguration.class,
 })
-public class Application implements CommandLineRunner {
+public class Application {
 
-    @Autowired
-    private TicketService ticketService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -30,6 +25,5 @@ public class Application implements CommandLineRunner {
     public void run(String... args) {
         log.info("Application running with arguments: {}", Arrays.toString(args));
         log.info("Server running on TimeZone: '{}'", TimeZone.getDefault().getID());
-        log.info("{}", ticketService.findTickets("ff2a2db3-464b-42d0-8c8f-6b1fb10281db"));
     }
 }
