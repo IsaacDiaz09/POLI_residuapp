@@ -6,11 +6,13 @@
 </head>
 <body>
 	<h2>Panel de administración</h2>
-	<H2 th:text="|user ${user.getName()} has authorities ${user.getAuthorities()}|"></H2>
+	<!-- <H2 th:text="|user ${user.getName()} has authorities ${user.getAuthorities()}|"></H2> -->
+
     	<a th:href="@{/tickets}">tickets</a>
     	<a th:href="@{/users}">users</a>
     	<a th:href="@{/companies}">companies</a>
     	<a th:href="@{/admin}">admin</a>
+		<a th:href="@{/formRegister}">formulario registro</a>
 
 </body>
 </html>

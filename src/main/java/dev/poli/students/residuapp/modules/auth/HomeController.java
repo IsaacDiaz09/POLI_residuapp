@@ -40,5 +40,13 @@ public class HomeController {
         modelAndView.setViewName("users");
         return modelAndView;
     }
+    
+    @GetMapping("formRegister")
+    public ModelAndView showform(ModelAndView modelAndView) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        modelAndView.addObject("user", authentication);
+        modelAndView.setViewName("form");
+        return modelAndView;
+    }
 
 }
