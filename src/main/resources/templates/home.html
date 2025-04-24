@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Residuapp</title>
 </head>
 <body>
-<h2 th:text="|Hello user ${user.getName()}|"></h2>
 <H2 th:text="|user ${user.getName()} has authorities ${user.getAuthorities()}|"></H2>
+    <a th:href="@{/tickets}">tickets</a>
+    <a th:href="@{/users}">users</a>
+    <a th:href="@{/companies}">companies</a>
+    <a th:href="@{/admin}">admin</a>
+
 </body>
 </html>

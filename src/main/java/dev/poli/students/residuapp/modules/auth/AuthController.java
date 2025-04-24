@@ -2,6 +2,7 @@ package dev.poli.students.residuapp.modules.auth;
 
 import dev.poli.students.residuapp.modules.auth.entity.FirebaseLoginResponse;
 import dev.poli.students.residuapp.modules.auth.forms.LoginForm;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,8 @@ public class AuthController {
             FirebaseLoginResponse loginData = authService.doLogin(loginForm);
             ResponseCookie resCookie = ResponseCookie.from("AUTH", loginData.getIdToken())
                     .httpOnly(true)
-                    .sameSite("None")
+                    .sameSite("Strict")
+                    .secure(false)
                     .path("/")
                     .maxAge(loginData.getExpiresInSeconds())
                     .build();
