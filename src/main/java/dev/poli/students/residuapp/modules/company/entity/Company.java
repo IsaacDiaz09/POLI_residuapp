@@ -1,4 +1,4 @@
-package dev.poli.students.residuapp.modules.user.entity;
+package dev.poli.students.residuapp.modules.company.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
