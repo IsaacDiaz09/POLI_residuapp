@@ -2,7 +2,6 @@ package dev.poli.students.residuapp.modules.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.Instant;
 
 @Entity
@@ -32,6 +31,10 @@ public class User {
 
     private String name;
 
+    // 🚀 AQUÍ AÑADES EL CAMPO EMAIL
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Builder.Default
     private Instant createdAt = Instant.now();
 
@@ -40,6 +43,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    // this field may be null if user does not belong to a company
+    // Puede ser nulo si no pertenece a ninguna empresa
     private String companyId;
 }

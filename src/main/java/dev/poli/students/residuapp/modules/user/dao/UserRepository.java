@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     // Buscar todos los usuarios de un tipo específico (por ejemplo: 'RECOLECTOR' o 'EMPRESA')
-    List<User> findByRole(String role);
+    // List<User> findByRole(String role);
 
     // Consulta personalizada: Buscar todos los usuarios ordenados alfabéticamente
     @Query("SELECT u FROM User u ORDER BY u.name ASC")
