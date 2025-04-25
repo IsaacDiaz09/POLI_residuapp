@@ -48,5 +48,13 @@ public class HomeController {
         modelAndView.setViewName("form");
         return modelAndView;
     }
+    
+    @GetMapping("admin")
+    public ModelAndView showadmin(ModelAndView modelAndView) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        modelAndView.addObject("user", authentication);
+        modelAndView.setViewName("admin");
+        return modelAndView;
+    }
 
 }
