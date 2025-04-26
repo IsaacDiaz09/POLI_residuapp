@@ -37,7 +37,6 @@ configurations {
 dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation 'org.xerial:sqlite-jdbc:3.41.2.2'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE'
     implementation 'com.google.firebase:firebase-admin:9.4.3'

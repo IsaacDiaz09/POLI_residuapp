@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 @Entity
 @Getter
@@ -27,16 +30,15 @@ public class User {
     }
 
     @Id
-    @Builder.Default
-    private Long id = System.nanoTime();
+    private String id;
 
     private String name;
 
-    // 🚀 AQUÍ AÑADES EL CAMPO EMAIL
     @Column
     private String email;
 
     @Builder.Default
+    @Getter(AccessLevel.NONE)
     private Instant createdAt = Instant.now();
 
     private Instant modifiedAt;
@@ -46,4 +48,8 @@ public class User {
 
     // Puede ser nulo si no pertenece a ninguna empresa
     private String companyId;
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt.atZone(ZoneId.of(TimeZone.getDefault().getID()));
+    }
 }

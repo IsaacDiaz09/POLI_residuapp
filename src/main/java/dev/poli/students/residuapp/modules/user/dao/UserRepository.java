@@ -1,5 +1,6 @@
 package dev.poli.students.residuapp.modules.user.dao;
 
+import dev.poli.students.residuapp.modules.user.dto.GarbageCollector;
 import dev.poli.students.residuapp.modules.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Consulta personalizada con LIKE (similar a búsqueda)
     @Query("SELECT u FROM User u WHERE u.name LIKE %:keyword%")
     List<User> searchByName(String keyword);
+
+    @Query("select new dev.poli.students.residuapp.modules.user.dto.GarbageCollector(s.id,s.name,c.name,s.email,s.status) from User s " +
+            "inner join Company c on c.identification = s.companyId where s.companyId is not null")
+    List<GarbageCollector> findAllGarbageCollectors();
+
+    @Query("select u from User u where u.companyId is null")
+    List<User> findRegularUsers();
 }

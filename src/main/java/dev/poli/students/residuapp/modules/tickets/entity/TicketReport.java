@@ -3,16 +3,20 @@ package dev.poli.students.residuapp.modules.tickets.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.Instant;
-import java.util.UUID;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 @Entity
+@Builder
 @Getter
 @Table
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class TicketReport {
 
     @Id
@@ -24,7 +28,13 @@ public class TicketReport {
 
     private String requestorUserId;
 
+    @Getter(AccessLevel.NONE)
     private Instant createdAt;
 
     private String jsonFilters;
+
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt.atZone(ZoneId.of(TimeZone.getDefault().getID()));
+    }
 }

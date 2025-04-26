@@ -34,7 +34,7 @@
             </a>
 
             <!-- Recolectores (activo) -->
-            <a href="/poliresiduapp/admin" class="flex items-center space-x-2 p-2 rounded bg-gray-100 text-black font-medium">
+            <a href="/poliresiduapp/admin" class="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                      stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -44,8 +44,7 @@
             </a>
 
             <!-- Informes -->
-            <a href="/poliresiduapp/report"
-               class="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 transition">
+            <a href="/poliresiduapp/report" class="flex items-center space-x-2 p-2 rounded bg-gray-100 text-black font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                      stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -81,34 +80,35 @@
     <!-- CONTENIDO PRINCIPAL -->
     <section class="flex-1 p-6 bg-gray-50">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-semibold text-gray-800">Recolectores</h2>
-            <button class="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition">
-                Añadir recolector
-            </button>
+            <h2 class="text-2xl font-semibold text-gray-800">Informe de Tickets</h2>
         </div>
 
         <div class="bg-white rounded-xl shadow p-4">
-            <table class="w-full text-left table-auto">
+            <form th:action="@{/report}" method="post">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">
+                    Generar Reporte
+                </button>
+            </form>
+        </div>
+        <div class="bg-white rounded-xl shadow p-2">
+            <div th:if="${reports.isEmpty()}">
+                <h3><i>No hay reportes que mostrar</i></h3>
+            </div>
+            <table class="w-full text-left table-auto" th:if="${!reports.isEmpty()}">
                 <thead>
                 <tr class="text-gray-600 border-b">
                     <th class="pb-2">Nombre</th>
-                    <th class="pb-2">Empresa Recolectora</th>
-                    <th class="pb-2">Correo</th>
-                    <th class="pb-2">Estado</th>
+                    <th class="pb-2">Usuario</th>
+                    <th class="pb-2">Fecha generación</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-800">
-                <tr class="border-b hover:bg-gray-50" th:each="collector : ${collectors}">
-                    <td class="py-3 font-medium" th:id="${collector.getUserId()}"
-                        th:text="${collector.getPersonName()}"></td>
-                    <td class="py-3 text-gray-500" th:text="${collector.getCompanyName()}"></td>
-                    <td class="py-3 text-gray-500" th:text="${collector.getEmail()}"></td>
-                    <td class="py-3" th:text="${collector.getStatus()}"></td>
-                    <td class="py-3">
-                        <button class="bg-green-700 px-3 py-1 rounded-full text-sm text-white hover:bg-green-800 transition">
-                            Ver detalles
-                        </button>
-                    </td>
+
+                <tr class="border-b hover:bg-gray-50" th:each="report : ${reports}">
+                    <td class="py-3 font-medium" th:id="${report.getId()}" th:text="${report.getName()}"></td>
+                    <td class="py-3 text-gray-500" th:text="${report.getRequestorUserId()}"></td>
+                    <td class="py-3 text-gray-500" th:text="${#temporals.format(report.getCreatedAt())}"></td>
                 </tr>
                 </tbody>
             </table>
