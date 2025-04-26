@@ -1,9 +1,11 @@
 package dev.poli.students.residuapp.modules.auth;
 
 import dev.poli.students.residuapp.modules.tickets.dao.TicketReportRepository;
+import dev.poli.students.residuapp.modules.tickets.dao.TicketRepository;
 import dev.poli.students.residuapp.modules.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
     private final TicketReportRepository ticketReportRepository;
 
     @GetMapping("home")
@@ -35,8 +38,10 @@ public class HomeController {
 
     @GetMapping("tickets")
     public ModelAndView tickets(ModelAndView modelAndView) {
+        Pageable page = PageRequest.of(0, 9);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         modelAndView.addObject("user", authentication);
+        modelAndView.addObject("tickets", ticketRepository.findAll(page));
         modelAndView.setViewName("tickets");
         return modelAndView;
     }
