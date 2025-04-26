@@ -2,6 +2,7 @@ package dev.poli.students.residuapp.modules.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.Instant;
 
 @Entity
@@ -32,7 +33,7 @@ public class User {
     private String name;
 
     // 🚀 AQUÍ AÑADES EL CAMPO EMAIL
-    @Column(nullable = false, unique = true)
+    @Column
     private String email;
 
     @Builder.Default
