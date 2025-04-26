@@ -18,7 +18,7 @@ class SecurityConfig {
     SecurityFilterChain configure(HttpSecurity http, SessionTokenAuthenticationFilter filter) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/auth/login/**").permitAll()
+                        .requestMatchers("/auth/login/**", "/home", "/img/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"> 
+
 <head>
-    <meta charset="UTF-8">
-    <title>Residuapp</title>
+  <meta charset="UTF-8">
+  <title>ResiduApp - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h2 th:text="|Hello user ${user.getName()}|"></h2>
-<H2 th:text="|user ${user.getName()} has authorities ${user.getAuthorities()}|"></H2>
+
+<body class="bg-white text-gray-800">
+
+  <!-- NAVBAR -->
+  <header class="flex justify-between items-center px-8 py-4 shadow-md">
+    <h1 class="text-xl font-bold text-green-700">ResiduApp</h1>
+    <nav class="space-x-6 text-sm font-medium">
+      <a href="#" class="hover:text-green-700">Inicio</a>
+      <a href="#" class="hover:text-green-700">Sobre Nosotros</a>
+      <a th:href="@{/auth/login}" class="hover:text-green-700">Ingreso</a>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex flex-col md:flex-row items-center justify-center px-8 py-12 md:py-20 gap-10">
+
+    <!-- Imagen -->
+    <div class="w-full md:w-1/2 flex justify-center">
+      <img th:src="@{/img/residuapp.png}" alt="Chica reciclando" class="max-w-sm w-full">
+    </div>
+
+    <!-- Texto y botón -->
+    <div class="w-full md:w-1/2 text-center md:text-left space-y-6">
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight">
+        Por un <br>
+        planeta limpio! <br>
+        <span class="text-green-700">un click a la vez</span>
+      </h2>
+      <button class="bg-green-700 text-white px-6 py-3 rounded-full text-lg hover:bg-green-800 transition">
+        Cambiemos el mundo
+      </button>
+    </div>
+
+  </main>
+
 </body>
 </html>
+

@@ -25,5 +25,5 @@ public class CreateUserForm {
 
     @UUID
     @Nullable
-    private java.util.UUID companyId;
+    private String companyId;
 }

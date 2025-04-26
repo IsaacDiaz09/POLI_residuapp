@@ -1,11 +1,10 @@
-package dev.poli.students.residuapp.modules.user.entity;
+package dev.poli.students.residuapp.modules.company.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,9 +18,11 @@ public class Company {
     }
 
     @Id
-    private UUID id;
+    private String id;
 
     private String identification;
+
+    private String name;
 
     private Instant createdAt;
 
