@@ -10,5 +10,7 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
 
     List<Ticket> findAllByCollectionCompanyId(String collectionCompanyId, Pageable pageable);
 
+    List<Ticket> findAllByCollectionCompanyIdOrCollectionCompanyIdIsNull(String collectionCompanyId, Pageable pageable);
+
     List<Ticket> findAllByRequestorUserId(String requestorUserId, Pageable pageable);
 }

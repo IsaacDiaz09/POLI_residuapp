@@ -1,14 +1,20 @@
 package dev.poli.students.residuapp.modules.tickets.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 @Entity
+@Setter
 @Getter
+@Builder
 @Table
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class Ticket {
 
@@ -32,6 +38,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private GarbageType garbageType;
 
+    @Getter(AccessLevel.NONE)
     private Instant createdAt;
 
     private Instant updatedAt;
@@ -40,6 +47,13 @@ public class Ticket {
 
     private String collectionCompanyId;
 
+    @Column(name = "garbageCollectedKg")
+    private Integer garbageCollectedKg;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt.atZone(ZoneId.of(TimeZone.getDefault().getID()));
+    }
 }

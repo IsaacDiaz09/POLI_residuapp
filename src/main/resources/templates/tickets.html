@@ -5,6 +5,12 @@
     <title>Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<style>
+    .inactiveLink {
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+</style>
 <body class="bg-gray-100 min-h-screen">
 
 <div th:insert="~{common/header :: header}"></div>
@@ -37,15 +43,19 @@
                     <th class="pb-2">Tipo de Recoleccion</th>
                     <th class="pb-2">Empresa Asignada</th>
                     <th class="pb-2">Estado</th>
+                    <th sec:authorize="hasRole('ROLE_COMPANY_ADMIN')" class="pb-2">Modificar</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-800">
-                <tr class="border-b hover:bg-gray-50" th:each="ticket : ${tickets}">
-                    <td class="py-3 font-medium" th:id="${ticket.getId()}"
-                        th:text="${ticket.getRequestedLocation()}"></td>
+                <tr class="border-b hover:bg-gray-50" th:id="${ticket.getId()}" th:each="ticket : ${tickets}">
+                    <td class="py-3 font-medium" th:text="${ticket.getRequestedLocation()}"></td>
                     <td class="py-3 text-gray-500" th:text="${ticket.getGarbageType()}"></td>
                     <td class="py-3 text-gray-500" th:text="${ticket.getCollectionCompanyId()}"></td>
                     <td class="py-3 text-gray-500" th:text="${ticket.getStatus().name()}"></td>
+                    <td th:if="${ticket.getStatus().name() != 'FINISHED'}" sec:authorize="hasRole('ROLE_COMPANY_ADMIN')" class="py-3 text-gray-500"><a
+                            th:href="@{/garbageCollect(ticketId=${ticket.getId()})}">Modificar</a></td>
+                    <td th:if="${ticket.getStatus().name() == 'FINISHED'}" sec:authorize="hasRole('ROLE_COMPANY_ADMIN')" class="py-3 text-gray-500 inactiveLink"><a
+                            href="#">-</a></td>
                 </tr>
                 </tbody>
             </table>

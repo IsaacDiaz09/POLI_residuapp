@@ -33,7 +33,6 @@ public class TicketReport {
 
     private String jsonFilters;
 
-
     public ZonedDateTime getCreatedAt() {
         return createdAt.atZone(ZoneId.of(TimeZone.getDefault().getID()));
     }

@@ -2,6 +2,7 @@ package dev.poli.students.residuapp.modules.auth;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import dev.poli.students.residuapp.modules.auth.domain.InvalidCredentialsException;
 import dev.poli.students.residuapp.modules.auth.entity.FirebaseLoginResponse;
 import dev.poli.students.residuapp.modules.auth.forms.LoginForm;
 import dev.poli.students.residuapp.modules.user.entity.User;
@@ -64,8 +65,8 @@ public class AuthController {
                     .build();
             response.addHeader("Set-Cookie", resCookie.toString());
             response.sendRedirect(buildRedirectPath(role));
-        } catch (InterruptedException | IOException | FirebaseAuthException e) {
-            response.sendRedirect("/poliresiduapp/auth/login?error=" + e.getMessage());
+        } catch (InterruptedException | IOException | FirebaseAuthException | InvalidCredentialsException e) {
+            response.sendRedirect("/auth/login?error=" + e.getMessage());
         }
     }
 

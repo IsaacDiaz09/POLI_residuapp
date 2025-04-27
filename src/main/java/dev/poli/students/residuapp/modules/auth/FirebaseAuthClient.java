@@ -64,7 +64,7 @@ class FirebaseAuthClient {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
         if (response.statusCode() >= 400 && response.statusCode() <= 599) {
-            throw new InvalidCredentialsException("Credenciales invalidas=" + response.body());
+            throw new InvalidCredentialsException("Credenciales invalidas");
         }
         return GSON.fromJson(response.body(), FirebaseLoginResponse.class);
     }

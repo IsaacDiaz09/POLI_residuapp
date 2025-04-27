@@ -101,7 +101,7 @@ public class HomeController {
             return ticketRepository.findAllByRequestorUserId(userEmail, PAGE);
         } else if (userRole == User.Role.COMPANY_ADMIN) {
             User user = userRepository.findByEmail(userEmail);
-            return ticketRepository.findAllByCollectionCompanyId(user.getCompanyId(), PAGE);
+            return ticketRepository.findAllByCollectionCompanyIdOrCollectionCompanyIdIsNull(user.getCompanyId(), PAGE);
         }
         return ticketRepository.findAll(PAGE).getContent();
     }

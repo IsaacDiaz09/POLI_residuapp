@@ -7,7 +7,7 @@
 <div th:fragment="header">
     <header class="flex justify-between items-center px-8 py-4 shadow-md">
         <h1 class="text-xl font-bold text-green-700">ResiduApp</h1>
-        <p class="text-xl font-bold text-gray-700" th:text="|Bienvenido ${user.getName()}|"> </p>
+        <p class="text-xl font-bold text-gray-700" th:text="|Bienvenido ${#authentication.getName()}|"> </p>
         <nav class="space-x-6 text-sm font-medium">
             <form th:action="@{/auth/logout}" method="post">
                 <button type="submit" class="btn btn-sm btn-outline-secondary">Salir</button>
