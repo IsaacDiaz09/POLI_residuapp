@@ -41,6 +41,10 @@ class FirebaseAuthClient {
         this.firebaseAuth = firebaseAuth;
     }
 
+    public UserRecord getUser(String email) throws FirebaseAuthException {
+        return firebaseAuth.getUserByEmail(email);
+    }
+
     public FirebaseLoginResponse doLogin(LoginForm loginForm) throws IOException, InterruptedException {
         URI requestURI = URI.create("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + webApiKey);
         FirebaseLoginRequest loginRequest = FirebaseLoginRequest.builder()

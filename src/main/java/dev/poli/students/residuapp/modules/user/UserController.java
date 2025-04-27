@@ -1,9 +1,9 @@
-package dev.poli.students.residuapp.modules.tickets;
+package dev.poli.students.residuapp.modules.user;
 
 import dev.poli.students.residuapp.modules.AuthUtils;
+import dev.poli.students.residuapp.modules.auth.FirebaseAuthService;
 import dev.poli.students.residuapp.modules.tickets.dao.TicketReportRepository;
 import dev.poli.students.residuapp.modules.tickets.dao.TicketRepository;
-import dev.poli.students.residuapp.modules.tickets.entity.Ticket;
 import dev.poli.students.residuapp.modules.tickets.entity.TicketReport;
 import dev.poli.students.residuapp.modules.user.dao.UserRepository;
 import dev.poli.students.residuapp.modules.user.entity.User;
@@ -21,24 +21,27 @@ import java.io.OutputStream;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-public class TicketController {
+public class UserController {
 
     private final TicketReportRepository ticketReportRepository;
     private final TicketRepository ticketRepository;
+    private final FirebaseAuthService authService;
+    private final UserRepository repository;
+    private final UserService userService;
     private final UserRepository userRepository;
-    private final TicketService ticketService;
 
-    @PostMapping("/report/tickets")
+    @PostMapping("/report/users")
     public void downloadReport(HttpServletResponse response) throws IOException {
-        byte[] report = ticketService.generateReport(findTickets());
+        byte[] report = userService.generateReport(findUsers());
         String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS"));
 
-        String fileName = "ReporteTickets_" + today + ".csv";
+        String fileName = "ReporteUsuarios_" + today + ".csv";
 
         ticketReportRepository.saveAndFlush(TicketReport.builder()
                 .id(UUID.randomUUID().toString())
@@ -57,15 +60,15 @@ public class TicketController {
         }
     }
 
-    private List<Ticket> findTickets() {
+    private List<User> findUsers() {
         User.Role userRole = AuthUtils.getAuthenticatedUserRole();
         String userEmail = AuthUtils.getAuthenticatedUserName();
-        if (userRole == User.Role.SYSTEM_ADMIN) {
-            return ticketRepository.findAll();
-        } else if (userRole == User.Role.COMPANY_ADMIN) {
+        if (userRole == User.Role.COMPANY_ADMIN) {
             String companyId = userRepository.findByEmail(userEmail).getCompanyId();
-            return ticketRepository.findAllByCollectionCompanyId(companyId, Pageable.unpaged());
+            return userRepository.findByCompanyId(companyId, Pageable.unpaged());
+        } else if (userRole == User.Role.SYSTEM_ADMIN) {
+            return userRepository.findAll(Pageable.unpaged()).getContent();
         }
-        return ticketRepository.findAllByRequestorUserId(userEmail, Pageable.unpaged());
+        return new ArrayList<>();
     }
 }

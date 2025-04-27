@@ -2,6 +2,7 @@ package dev.poli.students.residuapp.modules.user.dao;
 
 import dev.poli.students.residuapp.modules.user.dto.GarbageCollector;
 import dev.poli.students.residuapp.modules.user.entity.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     // Buscar por email (para login)
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
     // Buscar todos los usuarios de un tipo específico (por ejemplo: 'RECOLECTOR' o 'EMPRESA')
     // List<User> findByRole(String role);
@@ -32,4 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.companyId is null")
     List<User> findRegularUsers();
+
+    List<User> findByCompanyId(String companyId, Pageable pageable);
 }

@@ -43,7 +43,7 @@ public class SessionTokenAuthenticationFilter extends OncePerRequestFilter {
                 FirebaseToken userInformation = authService.verifyIdToken(idToken);
                 User.Role userRole = User.Role.valueOf((String) userInformation.getClaims().getOrDefault("ROLES",
                         User.Role.UNDEFINED.name()));
-                List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userRole.name()));
+                List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + userRole.name()));
                 var authentication = new UsernamePasswordAuthenticationToken(userInformation.getEmail(), null,
                         authorities);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

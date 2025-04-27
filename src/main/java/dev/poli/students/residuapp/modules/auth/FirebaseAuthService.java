@@ -40,4 +40,8 @@ public class FirebaseAuthService {
         return firebaseClient.doLogin(loginForm);
     }
 
+    public UserRecord getUser(String email) throws FirebaseAuthException {
+        return firebaseClient.getUser(email);
+    }
+
 }
