@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="text-left" th:id="${ticket != null}">
+        <div class="text-left" th:if="${ticket != null}">
             <label class="block text-sm font-medium text-gray-700 mb-1" th:text="|Fecha Solicitud: ${#temporals.format(ticket.getCreatedAt())}|"></label>
         </div>
 

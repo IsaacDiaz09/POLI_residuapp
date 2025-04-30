@@ -66,7 +66,7 @@ public class AuthController {
             response.addHeader("Set-Cookie", resCookie.toString());
             response.sendRedirect(buildRedirectPath(role));
         } catch (InterruptedException | IOException | FirebaseAuthException | InvalidCredentialsException e) {
-            response.sendRedirect("/auth/login?error=" + e.getMessage());
+            response.sendRedirect("/poliresiduapp/auth/login?error=" + e.getMessage());
         }
     }
 
