@@ -1,7 +1,12 @@
 package dev.poli.students.residuapp.modules.auth;
 
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
+import dev.poli.students.residuapp.modules.auth.domain.InvalidCredentialsException;
 import dev.poli.students.residuapp.modules.auth.entity.FirebaseLoginResponse;
 import dev.poli.students.residuapp.modules.auth.forms.LoginForm;
+import dev.poli.students.residuapp.modules.user.entity.User;
+import io.netty.util.internal.StringUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -49,6 +54,8 @@ public class AuthController {
     public void handleLogin(@Valid LoginForm loginForm, HttpServletResponse response) throws IOException {
         try {
             FirebaseLoginResponse loginData = authService.doLogin(loginForm);
+            UserRecord user = authService.getUser(loginData.getEmail());
+            String role = (String) user.getCustomClaims().getOrDefault("ROLES", User.Role.UNDEFINED.name());
             ResponseCookie resCookie = ResponseCookie.from("AUTH", loginData.getIdToken())
                     .httpOnly(true)
                     .sameSite("Strict")
@@ -57,8 +64,8 @@ public class AuthController {
                     .maxAge(loginData.getExpiresInSeconds())
                     .build();
             response.addHeader("Set-Cookie", resCookie.toString());
-            response.sendRedirect("/poliresiduapp/admin");
-        } catch (InterruptedException | IOException e) {
+            response.sendRedirect(buildRedirectPath(role));
+        } catch (InterruptedException | IOException | FirebaseAuthException | InvalidCredentialsException e) {
             response.sendRedirect("/poliresiduapp/auth/login?error=" + e.getMessage());
         }
     }
@@ -81,6 +88,14 @@ public class AuthController {
         redirectView.setUrl("/home");
         redirectView.setContextRelative(true);
         return redirectView;
+    }
+
+    private String buildRedirectPath(String userRole) {
+        User.Role role = StringUtil.isNullOrEmpty(userRole) ? User.Role.UNDEFINED : User.Role.valueOf(userRole);
+        if (role == User.Role.SYSTEM_ADMIN) {
+            return "/poliresiduapp/admin";
+        }
+        return "/poliresiduapp/tickets";
     }
 
 }

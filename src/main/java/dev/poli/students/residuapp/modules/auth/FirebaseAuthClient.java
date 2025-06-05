@@ -41,6 +41,10 @@ class FirebaseAuthClient {
         this.firebaseAuth = firebaseAuth;
     }
 
+    public UserRecord getUser(String email) throws FirebaseAuthException {
+        return firebaseAuth.getUserByEmail(email);
+    }
+
     public FirebaseLoginResponse doLogin(LoginForm loginForm) throws IOException, InterruptedException {
         URI requestURI = URI.create("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + webApiKey);
         FirebaseLoginRequest loginRequest = FirebaseLoginRequest.builder()
@@ -60,7 +64,7 @@ class FirebaseAuthClient {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
         if (response.statusCode() >= 400 && response.statusCode() <= 599) {
-            throw new InvalidCredentialsException("Credenciales invalidas=" + response.body());
+            throw new InvalidCredentialsException("Credenciales invalidas");
         }
         return GSON.fromJson(response.body(), FirebaseLoginResponse.class);
     }

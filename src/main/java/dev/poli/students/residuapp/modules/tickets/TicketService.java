@@ -12,21 +12,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketService {
 
-    public byte[] generateReport(List<Ticket> tickets) throws IOException {
+    public byte[] generateReport(List<Ticket> tickets) {
         String[] Encabezados = new String[]{
-                "Id_Ticket ",
-                "Id_Company ",
-                "Id_User ",
-                "Status ",
-                "Application_Date ",
-                "Garbage_type "
+                "Id_Ticket",
+                "Id_Company",
+                "Localidad",
+                "Id_User",
+                "Status",
+                "Application_Date",
+                "Garbage_type"
         };
         StringBuilder reporte = new StringBuilder(String.join(",", Encabezados));
         reporte.append("\n");
 
         for (Ticket ticket : tickets) {
-            String fila = ticket.getId() + ", " + ticket.getCollectionCompanyId() + ", " + ticket.getRequestorUserId() + ", " +
-                    ticket.getStatus() + ", " + ticket.getCreatedAt() + ", " + ticket.getGarbageType();
+            String fila = ticket.getId() + "," +
+                    ticket.getCollectionCompanyId() + "," +
+                    ticket.getRequestedLocation() + "," +
+                    ticket.getRequestorUserId() + "," +
+                    ticket.getStatus() + "," +
+                    ticket.getCreatedAt() + "," +
+                    ticket.getGarbageType();
             reporte.append(fila).append("\n");
         }
         return reporte.toString().getBytes(StandardCharsets.UTF_8);
